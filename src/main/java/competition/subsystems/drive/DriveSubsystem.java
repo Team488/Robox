@@ -6,12 +6,12 @@ import javax.inject.Singleton;
 import org.apache.log4j.Logger;
 
 import competition.electrical_contract.ElectricalContract;
-import xbot.common.controls.actuators.XCANTalon;
-import xbot.common.controls.actuators.XCANTalon.XCANTalonFactory;
+import xbot.common.controls.actuators.XCANSparkMax;
 import xbot.common.math.PIDManager;
 import xbot.common.math.XYPair;
 import xbot.common.math.PIDManager.PIDManagerFactory;
-import xbot.common.properties.XPropertyManager;
+import xbot.common.properties.DoubleProperty;
+import xbot.common.properties.PropertyFactory;
 import xbot.common.subsystems.drive.BaseDriveSubsystem;
 
 @Singleton
@@ -20,28 +20,38 @@ public class DriveSubsystem extends BaseDriveSubsystem {
     
     ElectricalContract contract;
     
-    public final XCANTalon leftLeader;
-    public final XCANTalon rightLeader;
+    public final XCANSparkMax leftLeader;
+    public final XCANSparkMax rightLeader;
 
     private final PIDManager positionPid;
     private final PIDManager rotationPid;
 
     private double scalingFactorFromTicksToInches = 1.0 / 256.0;
 
+    DoubleProperty leftPowerProperty;
+    DoubleProperty rightPowerProperty;
+
     @Inject
-    public DriveSubsystem(XCANTalonFactory talonFactory, XPropertyManager propManager, ElectricalContract contract, PIDManagerFactory pf) {
+    public DriveSubsystem(XCANSparkMax.XCANSparkMaxFactory talonFactory, PropertyFactory propertyFactory, ElectricalContract contract, PIDManagerFactory pf) {
         log.info("Creating DriveSubsystem");
 
-        this.leftLeader = talonFactory.create(contract.getLeftLeader());
-        this.rightLeader = talonFactory.create(contract.getRightLeader());
+        propertyFactory.setPrefix(this);
+        leftPowerProperty = propertyFactory.createEphemeralProperty("LeftPower", 0);
+        rightPowerProperty = propertyFactory.createEphemeralProperty("RightPower", 0);
+
+        this.leftLeader = talonFactory.create(contract.getLeftLeader(), this.getPrefix(), "left");
+        this.rightLeader = talonFactory.create(contract.getRightLeader(), this.getPrefix(), "right");
 
         positionPid = pf.create(getPrefix() + "PositionPID");
         rotationPid = pf.create(getPrefix() + "RotationPID");
     }
 
     public void tankDrive(double leftPower, double rightPower) {
-        this.leftLeader.simpleSet(leftPower);
-        this.rightLeader.simpleSet(rightPower);
+        this.leftLeader.set(leftPower);
+        this.rightLeader.set(rightPower);
+
+        this.leftPowerProperty.set(leftPower);
+        this.rightPowerProperty.set(rightPower);
     }
 
     @Override
@@ -66,22 +76,28 @@ public class DriveSubsystem extends BaseDriveSubsystem {
         double left = y - rotate;
         double right = y + rotate;
 
-        this.leftLeader.simpleSet(left);
-        this.rightLeader.simpleSet(right);
+        this.leftLeader.set(left);
+        this.rightLeader.set(right);
     }
 
     @Override
     public double getLeftTotalDistance() {
-        return leftLeader.getSelectedSensorPosition(0) * scalingFactorFromTicksToInches;
+        return leftLeader.getPosition() * scalingFactorFromTicksToInches;
     }
 
     @Override
     public double getRightTotalDistance() {
-        return rightLeader.getSelectedSensorPosition(0) * scalingFactorFromTicksToInches;
+        return rightLeader.getPosition() * scalingFactorFromTicksToInches;
     }
 
     @Override
     public double getTransverseDistance() {
         return 0;
+    }
+
+    @Override
+    public void periodic() {
+        leftLeader.periodic();
+        rightLeader.periodic();
     }
 }
