@@ -20,8 +20,8 @@ public class DriveSubsystem extends BaseDriveSubsystem {
     
     ElectricalContract contract;
     
-    public final XCANSparkMax leftLeader;
-    public final XCANSparkMax rightLeader;
+    public XCANSparkMax leftMotor;
+    public XCANSparkMax rightMotor;
 
     private final PIDManager positionPid;
     private final PIDManager rotationPid;
@@ -39,19 +39,16 @@ public class DriveSubsystem extends BaseDriveSubsystem {
         leftPowerProperty = propertyFactory.createEphemeralProperty("LeftPower", 0);
         rightPowerProperty = propertyFactory.createEphemeralProperty("RightPower", 0);
 
-        this.leftLeader = talonFactory.create(contract.getLeftLeader(), this.getPrefix(), "left");
-        this.rightLeader = talonFactory.create(contract.getRightLeader(), this.getPrefix(), "right");
-
         positionPid = pf.create(getPrefix() + "PositionPID");
         rotationPid = pf.create(getPrefix() + "RotationPID");
     }
 
-    public void tankDrive(double leftPower, double rightPower) {
-        this.leftLeader.set(leftPower);
-        this.rightLeader.set(rightPower);
+    public void tankDrive(double leftJoystickPower, double rightJoystickPower) {
+        this.leftMotor.set(leftJoystickPower);
+        this.rightMotor.set(rightJoystickPower);
 
-        this.leftPowerProperty.set(leftPower);
-        this.rightPowerProperty.set(rightPower);
+        this.leftPowerProperty.set(leftJoystickPower);
+        this.rightPowerProperty.set(rightJoystickPower);
     }
 
     @Override
@@ -76,18 +73,18 @@ public class DriveSubsystem extends BaseDriveSubsystem {
         double left = y - rotate;
         double right = y + rotate;
 
-        this.leftLeader.set(left);
-        this.rightLeader.set(right);
+        this.leftMotor.set(left);
+        this.rightMotor.set(right);
     }
 
     @Override
     public double getLeftTotalDistance() {
-        return leftLeader.getPosition() * scalingFactorFromTicksToInches;
+        return leftMotor.getPosition() * scalingFactorFromTicksToInches;
     }
 
     @Override
     public double getRightTotalDistance() {
-        return rightLeader.getPosition() * scalingFactorFromTicksToInches;
+        return rightMotor.getPosition() * scalingFactorFromTicksToInches;
     }
 
     @Override
@@ -97,7 +94,7 @@ public class DriveSubsystem extends BaseDriveSubsystem {
 
     @Override
     public void periodic() {
-        leftLeader.periodic();
-        rightLeader.periodic();
+        leftMotor.periodic();
+        rightMotor.periodic();
     }
 }
