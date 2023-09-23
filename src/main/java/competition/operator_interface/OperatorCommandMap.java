@@ -3,7 +3,13 @@ package competition.operator_interface;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import competition.subsystems.motorControl.commands.*;
+import competition.subsystems.motor_control.commands.ChangingLeftMotor;
+import competition.subsystems.motor_control.commands.ChangingRightMotor;
+import competition.subsystems.motor_control.commands.SetM1;
+import competition.subsystems.motor_control.commands.SetM2;
+import competition.subsystems.motor_control.commands.SetM3;
+import competition.subsystems.motor_control.commands.SetM4;
+import competition.subsystems.motor_control.commands.SetM5;
 import xbot.common.controls.sensors.XXboxController;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 

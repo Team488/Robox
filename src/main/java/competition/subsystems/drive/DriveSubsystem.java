@@ -79,12 +79,12 @@ public class DriveSubsystem extends BaseDriveSubsystem {
 
     @Override
     public double getLeftTotalDistance() {
-        return leftMotor.getPosition() * scalingFactorFromTicksToInches;
+        return 0;
     }
 
     @Override
     public double getRightTotalDistance() {
-        return rightMotor.getPosition() * scalingFactorFromTicksToInches;
+        return 0;
     }
 
     @Override
@@ -92,9 +92,9 @@ public class DriveSubsystem extends BaseDriveSubsystem {
         return 0;
     }
 
-    @Override
-    public void periodic() {
-        leftMotor.periodic();
-        rightMotor.periodic();
-    }
+//    @Override
+//    public void periodic() {
+//        leftMotor.periodic();
+//        rightMotor.periodic();
+//    }
 }

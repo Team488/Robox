@@ -1,21 +1,21 @@
-package competition.subsystems.motorControl.commands;
+package competition.subsystems.motor_control.commands;
 
-import competition.subsystems.motorControl.MotorControlSubsystem;
+import competition.subsystems.motor_control.MotorControlSubsystem;
 import xbot.common.command.BaseCommand;
 
 import javax.inject.Inject;
 
-public class SetM3 extends BaseCommand {
+public class ChangingLeftMotor extends BaseCommand {
     MotorControlSubsystem motor;
 
     @Inject
-    public SetM3(MotorControlSubsystem motor) {
+    public ChangingLeftMotor(MotorControlSubsystem motor) {
         this.motor = motor;
     }
 
     @Override
     public void initialize() {
-        motor.setMotor(2);
+        motor.listenForLeft();
     }
 
     @Override

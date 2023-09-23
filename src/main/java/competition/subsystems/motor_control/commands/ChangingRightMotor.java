@@ -1,9 +1,7 @@
-package competition.subsystems.motorControl.commands;
+package competition.subsystems.motor_control.commands;
 
-import competition.operator_interface.OperatorInterface;
-import competition.subsystems.motorControl.MotorControlSubsystem;
+import competition.subsystems.motor_control.MotorControlSubsystem;
 import xbot.common.command.BaseCommand;
-import xbot.common.controls.sensors.XXboxController;
 
 import javax.inject.Inject;
 

@@ -15,25 +15,15 @@ public class CompetitionContract extends ElectricalContract {
     @Inject
     public CompetitionContract() {}
 
-    @Override
-    public DeviceInfo getLeftLeader() {
-        return new DeviceInfo(0, true);
-    }
-
-    @Override
-    public DeviceInfo getRightLeader() {
-        return new DeviceInfo(0, true);
-    }
-
     /*
     public DeviceInfo getMotor1() {return new DeviceInfo(channel: number, inverted: true)
 
     And then just like 5 of them?
      */
     @Override
-    public DeviceInfo getMotor1() {return new DeviceInfo(1, true);}
+    public DeviceInfo getMotor1() {return new DeviceInfo(33, true);}
     @Override
-    public DeviceInfo getMotor2() {return new DeviceInfo(2, true);}
+    public DeviceInfo getMotor2() {return new DeviceInfo(34, true);}
     @Override
     public DeviceInfo getMotor3() {return new DeviceInfo(3, true);}
     @Override

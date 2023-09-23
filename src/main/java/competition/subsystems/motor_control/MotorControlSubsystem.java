@@ -1,15 +1,15 @@
-package competition.subsystems.motorControl;
+package competition.subsystems.motor_control;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import competition.electrical_contract.ElectricalContract;
 import competition.subsystems.drive.DriveSubsystem;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
-import xbot.common.properties.IPropertySupport;
 import xbot.common.properties.PropertyFactory;
 
-
+@Singleton
 public class MotorControlSubsystem extends BaseSubsystem {
 
 
@@ -43,20 +43,22 @@ public class MotorControlSubsystem extends BaseSubsystem {
     }
 
     public void setMotor(int index) {
-        if (motors[index] != null) {
-            if (listeningForLeft) {
-                if (drive.rightMotor == motors[index]) {
-                    updateMotor(motors[index], drive.leftMotor);
-                    return;
-                }
-                updateMotor(motors[index], drive.rightMotor);
-            } else if (listeningForRight) {
-                if (drive.leftMotor == motors[index]) {
-                    updateMotor(drive.rightMotor, motors[index]);
-                    return;
-                }
-                updateMotor(drive.leftMotor, motors[index]);
+        // Check if index is in range of motors array
+        if (index+1 > motors.length || index < 0) {return;}
+
+        if (listeningForLeft) {
+            // Swap left and right if setting right to left
+            if (drive.rightMotor == motors[index]) {
+                updateMotor(motors[index], drive.leftMotor);
+                return;
             }
+            updateMotor(motors[index], drive.rightMotor);
+        } else if (listeningForRight) {
+            if (drive.leftMotor == motors[index]) {
+                updateMotor(drive.rightMotor, motors[index]);
+                return;
+            }
+            updateMotor(drive.leftMotor, motors[index]);
         }
     }
 
