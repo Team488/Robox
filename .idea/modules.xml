@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SeriouslyCommonLib/Robox.SeriouslyCommonLib.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SeriouslyCommonLib/Robox.SeriouslyCommonLib.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SeriouslyCommonLib/Robox.SeriouslyCommonLib.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SeriouslyCommonLib/Robox.SeriouslyCommonLib.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Robox.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Robox.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Robox.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Robox.test.iml" />
+    </modules>
+  </component>
+</project>
