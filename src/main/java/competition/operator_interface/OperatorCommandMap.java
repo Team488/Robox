@@ -3,13 +3,9 @@ package competition.operator_interface;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import competition.subsystems.motor_control.commands.ChangingLeftMotor;
 import competition.subsystems.motor_control.commands.ChangingRightMotor;
-import competition.subsystems.motor_control.commands.SetM1;
-import competition.subsystems.motor_control.commands.SetM2;
-import competition.subsystems.motor_control.commands.SetM3;
-import competition.subsystems.motor_control.commands.SetM4;
-import competition.subsystems.motor_control.commands.SetM5;
+import competition.subsystems.motor_control.commands.ChangingLeftMotor;
+import competition.subsystems.motor_control.commands.SetMotor;
 import xbot.common.controls.sensors.XXboxController;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
@@ -29,15 +25,15 @@ public class OperatorCommandMap {
             SetRobotHeadingCommand resetHeading,
             ChangingLeftMotor changingLeftMotor,
             ChangingRightMotor changingRightMotor,
-            SetM1 setM1,
-            SetM2 setM2,
-            SetM3 setM3,
-            SetM4 setM4,
-            SetM5 setM5
+            SetMotor setMotor0,
+            SetMotor setMotor1,
+            SetMotor setMotor2,
+            SetMotor setMotor3,
+            SetMotor setMotor4
     )
     {
         resetHeading.setHeadingToApply(90);
-        operatorInterface.gamepad.getifAvailable(1).onTrue(resetHeading);
+        //operatorInterface.gamepad.getifAvailable(1).onTrue(resetHeading);
 
         // Listening for button to change motors
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Back).onTrue(changingLeftMotor);
@@ -45,11 +41,18 @@ public class OperatorCommandMap {
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Start).onTrue(changingRightMotor);
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Start).onFalse(changingRightMotor);
 
+        // Initialize setMotors
+        setMotor0.setMotor(0);
+        setMotor1.setMotor(1);
+        setMotor2.setMotor(2);
+        setMotor3.setMotor(3);
+        setMotor4.setMotor(4);
+
         // Buttons to change motors
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.RightBumper).onTrue(setM1);
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Y).onTrue(setM2);
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).onTrue(setM3);
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.B).onTrue(setM4);
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.A).onTrue(setM5);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.RightBumper).onTrue(setMotor0);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Y).onTrue(setMotor1);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).onTrue(setMotor2);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.B).onTrue(setMotor3);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.A).onTrue(setMotor4);
     }
 }

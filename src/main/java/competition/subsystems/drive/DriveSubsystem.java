@@ -44,11 +44,11 @@ public class DriveSubsystem extends BaseDriveSubsystem {
     }
 
     public void tankDrive(double leftJoystickPower, double rightJoystickPower) {
-        this.leftMotor.set(leftJoystickPower);
+        /*this.leftMotor.set(leftJoystickPower);
         this.rightMotor.set(rightJoystickPower);
 
         this.leftPowerProperty.set(leftJoystickPower);
-        this.rightPowerProperty.set(rightJoystickPower);
+        this.rightPowerProperty.set(rightJoystickPower);*/
     }
 
     @Override

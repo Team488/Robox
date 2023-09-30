@@ -12,20 +12,17 @@ import xbot.common.properties.PropertyFactory;
 @Singleton
 public class MotorControlSubsystem extends BaseSubsystem {
 
-
-
-    final DriveSubsystem drive;
-
     boolean listeningForLeft = false;
     boolean listeningForRight = false;
+
+    XCANSparkMax activeLeft;
+    XCANSparkMax activeRight;
 
     XCANSparkMax[] motors;
 
     @Inject
     public MotorControlSubsystem(XCANSparkMax.XCANSparkMaxFactory smFactory, PropertyFactory propertyFactory, ElectricalContract contract, DriveSubsystem ds) {
         propertyFactory.setPrefix(this);
-        this.drive = ds;
-
 
         XCANSparkMax motor1 = smFactory.create(contract.getMotor1(), this.getPrefix(), "m1");
         XCANSparkMax motor2 = smFactory.create(contract.getMotor2(), this.getPrefix(), "m2");
@@ -38,28 +35,45 @@ public class MotorControlSubsystem extends BaseSubsystem {
     }
 
     public void updateMotor(XCANSparkMax left, XCANSparkMax right) {
-        drive.leftMotor = left;
-        drive.rightMotor = right;
+        this.activeLeft = left;
+        this.activeRight = right;
     }
 
     public void setMotor(int index) {
         // Check if index is in range of motors array
+        System.out.println("setMotor ran with index "+index);
         if (index+1 > motors.length || index < 0) {return;}
+        System.out.println("setMotor passed the test");
+        System.out.println("listeningForLeft: "+listeningForLeft);
+        System.out.println("listeningForRight: "+listeningForRight);
 
         if (listeningForLeft) {
             // Swap left and right if setting right to left
-            if (drive.rightMotor == motors[index]) {
-                updateMotor(motors[index], drive.leftMotor);
+            if (activeRight == motors[index]) {
+                updateMotor(motors[index], activeLeft);
+                System.out.println("Swapped left & right");
+                System.out.println(activeLeft);
+                System.out.println(activeRight);
                 return;
             }
-            updateMotor(motors[index], drive.rightMotor);
+            updateMotor(motors[index], activeRight);
+            System.out.println("updateMotor Left");
+
         } else if (listeningForRight) {
-            if (drive.leftMotor == motors[index]) {
-                updateMotor(drive.rightMotor, motors[index]);
+            if (activeLeft == motors[index]) {
+                updateMotor(activeRight, motors[index]);
+                System.out.println("Swapped left & right");
+                System.out.println(activeLeft);
+                System.out.println(activeRight);
                 return;
             }
-            updateMotor(drive.leftMotor, motors[index]);
+            updateMotor(activeLeft, motors[index]);
+            System.out.println("updateMotor Right");
         }
+
+        System.out.println("Finished");
+        System.out.println(activeLeft);
+        System.out.println(activeRight);
     }
 
     public void listenForRight() {
@@ -68,5 +82,10 @@ public class MotorControlSubsystem extends BaseSubsystem {
 
     public void listenForLeft() {
         listeningForLeft = !listeningForLeft;
+    }
+
+    public void driveActive(double leftPower, double rightPower) {
+        activeLeft.set(leftPower);
+        activeRight.set(rightPower);
     }
 }
