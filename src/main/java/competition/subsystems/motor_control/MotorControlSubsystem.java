@@ -41,39 +41,23 @@ public class MotorControlSubsystem extends BaseSubsystem {
 
     public void setMotor(int index) {
         // Check if index is in range of motors array
-        System.out.println("setMotor ran with index "+index);
         if (index+1 > motors.length || index < 0) {return;}
-        System.out.println("setMotor passed the test");
-        System.out.println("listeningForLeft: "+listeningForLeft);
-        System.out.println("listeningForRight: "+listeningForRight);
 
         if (listeningForLeft) {
             // Swap left and right if setting right to left
             if (activeRight == motors[index]) {
                 updateMotor(motors[index], activeLeft);
-                System.out.println("Swapped left & right");
-                System.out.println(activeLeft);
-                System.out.println(activeRight);
                 return;
             }
             updateMotor(motors[index], activeRight);
-            System.out.println("updateMotor Left");
 
         } else if (listeningForRight) {
             if (activeLeft == motors[index]) {
                 updateMotor(activeRight, motors[index]);
-                System.out.println("Swapped left & right");
-                System.out.println(activeLeft);
-                System.out.println(activeRight);
                 return;
             }
             updateMotor(activeLeft, motors[index]);
-            System.out.println("updateMotor Right");
         }
-
-        System.out.println("Finished");
-        System.out.println(activeLeft);
-        System.out.println(activeRight);
     }
 
     public void listenForRight() {
@@ -85,6 +69,21 @@ public class MotorControlSubsystem extends BaseSubsystem {
     }
 
     public void driveActive(double leftPower, double rightPower) {
+        // leftPower and rightPower ranges from 1 to -1.
+        /* Test code in electrical.
+        double setPoint = 2200;
+        double motor_cmd = setPoint * 0.00017123; // -1 to 1
+        double diff = setPoint - activeLeft.getVelocity(); // Now vs desired
+        double kP = 0.0002; // How much we want to adjust how much the feedback changes our system
+
+        double final_cmd = motor_cmd + (diff * kP);
+        double diffKp = diff * kP;
+
+        activeLeft.set(final_cmd);
+        activeRight.set(rightPower);
+        System.out.println("pos: " + activeLeft.getPosition());
+        System.out.println(activeLeft.get());
+        System.out.println("diffKp: " + diffKp); */
         activeLeft.set(leftPower);
         activeRight.set(rightPower);
     }
