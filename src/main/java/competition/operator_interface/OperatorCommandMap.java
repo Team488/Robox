@@ -3,9 +3,7 @@ package competition.operator_interface;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import competition.subsystems.motor_control.commands.ChangingRightMotor;
-import competition.subsystems.motor_control.commands.ChangingLeftMotor;
-import competition.subsystems.motor_control.commands.SetMotor;
+import competition.subsystems.motor_control.commands.*;
 import xbot.common.controls.sensors.XXboxController;
 import xbot.common.subsystems.pose.commands.SetRobotHeadingCommand;
 
@@ -25,6 +23,8 @@ public class OperatorCommandMap {
             SetRobotHeadingCommand resetHeading,
             ChangingLeftMotor changingLeftMotor,
             ChangingRightMotor changingRightMotor,
+            WaveFormDrive waveFormDrive,
+            DriveBySetRPM driveBySetRPM,
             SetMotor setMotor0,
             SetMotor setMotor1,
             SetMotor setMotor2,
@@ -54,5 +54,8 @@ public class OperatorCommandMap {
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).onTrue(setMotor2);
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.B).onTrue(setMotor3);
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.A).onTrue(setMotor4);
+
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.LeftBumper).whileTrue(waveFormDrive);
+        
     }
 }

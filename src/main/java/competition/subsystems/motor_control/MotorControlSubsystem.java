@@ -7,6 +7,7 @@ import competition.electrical_contract.ElectricalContract;
 import competition.subsystems.drive.DriveSubsystem;
 import xbot.common.command.BaseSubsystem;
 import xbot.common.controls.actuators.XCANSparkMax;
+import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
 @Singleton
@@ -20,6 +21,8 @@ public class MotorControlSubsystem extends BaseSubsystem {
 
     XCANSparkMax[] motors;
 
+    DoubleProperty motorSpeed;
+
     @Inject
     public MotorControlSubsystem(XCANSparkMax.XCANSparkMaxFactory smFactory, PropertyFactory propertyFactory, ElectricalContract contract, DriveSubsystem ds) {
         propertyFactory.setPrefix(this);
@@ -29,6 +32,8 @@ public class MotorControlSubsystem extends BaseSubsystem {
         XCANSparkMax motor3 = smFactory.create(contract.getMotor3(), this.getPrefix(), "m3");
         XCANSparkMax motor4 = smFactory.create(contract.getMotor4(), this.getPrefix(), "m4");
         XCANSparkMax motor5 = smFactory.create(contract.getMotor5(), this.getPrefix(), "m5");
+
+        motorSpeed = propertyFactory.createEphemeralProperty("Motor4Speed", 0.0);
 
         motors = new XCANSparkMax[]{motor1, motor2, motor3, motor4, motor5};
         updateMotor(motor1, motor2);
@@ -86,5 +91,18 @@ public class MotorControlSubsystem extends BaseSubsystem {
         System.out.println("diffKp: " + diffKp); */
         activeLeft.set(leftPower);
         activeRight.set(rightPower);
+    }
+
+    public void setLeftSpeed() {
+
+    }
+
+    @Override
+    public void periodic() {
+        for (XCANSparkMax motor : motors) {
+            motor.periodic();
+        }
+
+        motorSpeed.set(motors[3].getVelocity());
     }
 }
