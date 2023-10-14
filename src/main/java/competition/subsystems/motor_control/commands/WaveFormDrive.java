@@ -3,6 +3,7 @@ package competition.subsystems.motor_control.commands;
 import competition.subsystems.motor_control.MotorControlSubsystem;
 import xbot.common.command.BaseCommand;
 import xbot.common.controls.sensors.XTimer;
+import xbot.common.properties.BooleanProperty;
 import xbot.common.properties.DoubleProperty;
 import xbot.common.properties.PropertyFactory;
 
@@ -14,6 +15,9 @@ public class WaveFormDrive extends BaseCommand {
     DoubleProperty amplitude;
     DoubleProperty offset;
     DoubleProperty maxSpeed;
+    DoubleProperty waveForm;
+
+    BooleanProperty isClosedLoop;
 
     MotorControlSubsystem motor;
 
@@ -26,6 +30,8 @@ public class WaveFormDrive extends BaseCommand {
         amplitude = pf.createPersistentProperty("amplitude", 0.1);
         offset = pf.createPersistentProperty("offset", 0);
         maxSpeed = pf.createPersistentProperty("maxSpeed", 1);
+        waveForm = pf.createPersistentProperty("waveForm", 0);
+        isClosedLoop = pf.createPersistentProperty("isClosedLoop", false);
 
         this.motor = motor;
     }
@@ -37,9 +43,18 @@ public class WaveFormDrive extends BaseCommand {
     public void execute() {
         if (Math.abs(maxSpeed.get()) < 1) {return;}
 
-        double power = (offset.get() / maxSpeed.get()) + ((amplitude.get() / maxSpeed.get())
-                *  Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
+        if (!isClosedLoop.get()) {
+            double power = (offset.get() / maxSpeed.get()) + ((amplitude.get() / maxSpeed.get())
+                    * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
 
-        motor.driveActive(power, 0);
+            waveForm.set(power);
+            motor.driveActive(power, 0);
+        } else {
+            double speed = (offset.get()) + ((amplitude.get())
+                    * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
+
+            waveForm.set(speed);
+            motor.setLeftSpeed(speed);
+        }
     }
 }

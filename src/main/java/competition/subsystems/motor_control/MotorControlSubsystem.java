@@ -3,6 +3,7 @@ package competition.subsystems.motor_control;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.revrobotics.CANSparkMax;
 import competition.electrical_contract.ElectricalContract;
 import competition.subsystems.drive.DriveSubsystem;
 import xbot.common.command.BaseSubsystem;
@@ -93,8 +94,8 @@ public class MotorControlSubsystem extends BaseSubsystem {
         activeRight.set(rightPower);
     }
 
-    public void setLeftSpeed() {
-
+    public void setLeftSpeed(double speed) {
+        motors[3].setReference(speed, CANSparkMax.ControlType.kVelocity);
     }
 
     @Override
