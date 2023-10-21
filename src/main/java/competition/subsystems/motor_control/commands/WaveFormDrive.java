@@ -44,13 +44,13 @@ public class WaveFormDrive extends BaseCommand {
         if (Math.abs(maxSpeed.get()) < 1) {return;}
 
         if (!isClosedLoop.get()) {
-            double power = (offset.get() / maxSpeed.get()) + ((amplitude.get() / maxSpeed.get())
+            double power = offset.get() / maxSpeed.get() + ((amplitude.get() / maxSpeed.get())
                     * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
 
             waveForm.set(power);
             motor.driveActive(power, 0);
         } else {
-            double speed = (offset.get()) + ((amplitude.get())
+            double speed = offset.get() + (amplitude.get()
                     * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
 
             waveForm.set(speed);
