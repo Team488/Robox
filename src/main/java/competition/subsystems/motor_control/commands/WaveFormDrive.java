@@ -43,6 +43,8 @@ public class WaveFormDrive extends BaseCommand {
     public void execute() {
         if (Math.abs(maxSpeed.get()) < 1) {return;}
 
+        System.out.println("WaveFormDrive executing.");
+
         if (!isClosedLoop.get()) {
             double power = offset.get() / maxSpeed.get() + ((amplitude.get() / maxSpeed.get())
                     * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
