@@ -18,6 +18,8 @@ public class WaveFormDrive extends BaseCommand {
     DoubleProperty waveForm;
 
     BooleanProperty isClosedLoop;
+    BooleanProperty isPosition;
+    BooleanProperty isVelocity;
 
     MotorControlSubsystem motor;
 
@@ -32,6 +34,8 @@ public class WaveFormDrive extends BaseCommand {
         maxSpeed = pf.createPersistentProperty("maxSpeed", 1);
         waveForm = pf.createPersistentProperty("waveForm", 0);
         isClosedLoop = pf.createPersistentProperty("isClosedLoop", false);
+        isPosition = pf.createPersistentProperty("isPosition", false);
+        isVelocity = pf.createPersistentProperty("isVelocity", false);
 
         this.motor = motor;
     }
@@ -45,6 +49,7 @@ public class WaveFormDrive extends BaseCommand {
 
         System.out.println("WaveFormDrive executing.");
 
+        /*
         if (!isClosedLoop.get()) {
             double power = offset.get() / maxSpeed.get() + ((amplitude.get() / maxSpeed.get())
                     * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
@@ -57,6 +62,38 @@ public class WaveFormDrive extends BaseCommand {
 
             waveForm.set(speed);
             motor.setLeftSpeed(speed);
+         */
+        double speed = 0;
+
+        if (isClosedLoop.get()) {
+            System.out.println("closed loop");
+            //closed loop
+            if (isPosition.get()) {
+                //closed loop; position
+                speed = 0;
+            } else if(isVelocity.get()){
+                //closed loop; velocity
+                speed = 0;
+            } else {
+                //closed loop;
+                speed = 0;
+            }
+        } else {
+            System.out.println("open loop");
+            //open loop
+            if (isPosition.get()) {
+                System.out.println("open position");
+                //open loop; position
+                speed = 0;
+            } else if (isVelocity.get()){
+                //open loop; velocity
+                double power = offset.get() / maxSpeed.get() + ((amplitude.get() / maxSpeed.get())
+                        * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
+
+                waveForm.set(power);
+                motor.driveActive(power, 0);
+            } else {
+                speed = 0;}
         }
     }
 }

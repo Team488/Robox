@@ -82,6 +82,9 @@ public class MotorControlSubsystem extends BaseSubsystem {
     public void setLeftSpeed(double speed) {
         motors[3].setReference(speed, CANSparkMax.ControlType.kVelocity);
     }
+    public void setLeftPosition(double position) {
+        motors[3].setReference(position, CANSparkMax.ControlType.kPosition);
+    }
 
     @Override
     public void periodic() {
