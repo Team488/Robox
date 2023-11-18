@@ -58,5 +58,6 @@ public class OperatorCommandMap {
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.A).onTrue(setMotor4);
 
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.LeftBumper).whileTrue(waveFormDrive);
+
     }
 }

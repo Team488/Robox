@@ -64,16 +64,25 @@ public class WaveFormDrive extends BaseCommand {
             motor.setLeftSpeed(speed);
          */
         double speed = 0;
+        double position =0;
 
         if (isClosedLoop.get()) {
             System.out.println("closed loop");
             //closed loop
             if (isPosition.get()) {
                 //closed loop; position
-                speed = 0;
+                position = offset.get() + (amplitude.get()
+                        * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
+
+                waveForm.set(position);
+                motor.setLeftPosition(position);
             } else if(isVelocity.get()){
                 //closed loop; velocity
-                speed = 0;
+                speed = offset.get() + (amplitude.get()
+                        * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
+
+                waveForm.set(speed);
+                motor.setLeftSpeed(speed);
             } else {
                 //closed loop;
                 speed = 0;
@@ -82,7 +91,7 @@ public class WaveFormDrive extends BaseCommand {
             System.out.println("open loop");
             //open loop
             if (isPosition.get()) {
-                System.out.println("open position");
+                System.out.println("open position, not applicable");
                 //open loop; position
                 speed = 0;
             } else if (isVelocity.get()){
@@ -96,4 +105,11 @@ public class WaveFormDrive extends BaseCommand {
                 speed = 0;}
         }
     }
+    /*public boolean isFinished() {
+        System.out.println("isFinished");
+        motor.driveActive(0, 0);
+        return true;
+
+
+    }*/
 }

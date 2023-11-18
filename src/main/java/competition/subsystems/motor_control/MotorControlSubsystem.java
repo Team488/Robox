@@ -23,6 +23,7 @@ public class MotorControlSubsystem extends BaseSubsystem {
     XCANSparkMax[] motors;
 
     DoubleProperty motorSpeed;
+    DoubleProperty motorPosition;
 
     @Inject
     public MotorControlSubsystem(XCANSparkMax.XCANSparkMaxFactory smFactory, PropertyFactory propertyFactory, ElectricalContract contract, DriveSubsystem ds) {
@@ -35,6 +36,7 @@ public class MotorControlSubsystem extends BaseSubsystem {
         XCANSparkMax motor5 = smFactory.create(contract.getMotor5(), this.getPrefix(), "m5");
 
         motorSpeed = propertyFactory.createEphemeralProperty("Motor4Speed", 0.0);
+        motorPosition = propertyFactory.createEphemeralProperty("Motor4Position", 0.0);
 
         motors = new XCANSparkMax[]{motor1, motor2, motor3, motor4, motor5};
         updateMotor(motor1, motor2);
@@ -93,5 +95,6 @@ public class MotorControlSubsystem extends BaseSubsystem {
         }
 
         motorSpeed.set(motors[3].getVelocity());
+        motorPosition.set(motors[3].getPosition());
     }
 }
