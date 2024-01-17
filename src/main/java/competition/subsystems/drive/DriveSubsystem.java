@@ -3,9 +3,13 @@ package competition.subsystems.drive;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import org.apache.log4j.Logger;
+
+import xbot.common.advantage.DataFrameRefreshable;
+import xbot.common.controls.actuators.XCANSparkMax;
 
 import competition.electrical_contract.ElectricalContract;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import xbot.common.controls.actuators.XCANSparkMax;
 import xbot.common.math.PIDManager;
 import xbot.common.math.XYPair;
@@ -15,8 +19,8 @@ import xbot.common.properties.PropertyFactory;
 import xbot.common.subsystems.drive.BaseDriveSubsystem;
 
 @Singleton
-public class DriveSubsystem extends BaseDriveSubsystem {
-    private static Logger log = Logger.getLogger(DriveSubsystem.class);
+public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefreshable {
+    private static Logger log = LogManager.getLogger(DriveSubsystem.class);
     
     ElectricalContract contract;
     
@@ -91,6 +95,12 @@ public class DriveSubsystem extends BaseDriveSubsystem {
     public double getTransverseDistance() {
         return 0;
     }
+
+    @Override
+    public void refreshDataFrame() {
+
+    }
+
 
 //    @Override
 //    public void periodic() {
