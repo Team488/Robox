@@ -39,7 +39,9 @@ public class MotorControlSubsystem extends BaseSubsystem {
         motorPosition = propertyFactory.createEphemeralProperty("Motor4Position", 0.0);
 
         motors = new XCANSparkMax[]{motor1, motor2, motor3, motor4, motor5};
-        updateMotor(motor1, motor2);
+        updateMotor(motor4, motor1);
+
+
     }
 
     public void updateMotor(XCANSparkMax left, XCANSparkMax right) {
@@ -82,10 +84,20 @@ public class MotorControlSubsystem extends BaseSubsystem {
     }
 
     public void setLeftSpeed(double speed) {
-        motors[3].setReference(speed, CANSparkMax.ControlType.kVelocity);
+        activeLeft.setReference(speed, CANSparkMax.ControlType.kVelocity);
     }
     public void setLeftPosition(double position) {
-        motors[3].setReference(position, CANSparkMax.ControlType.kPosition);
+        activeLeft.setReference(position, CANSparkMax.ControlType.kPosition);
+
+    }
+
+    public void setRightSpeed(double speed) {
+        System.out.println("activeright running with speed: "+speed);
+        activeRight.setReference(speed, CANSparkMax.ControlType.kVelocity);
+
+    }
+    public void setRightPosition(double position) {
+        activeRight.setReference(position, CANSparkMax.ControlType.kPosition);
     }
 
     @Override
@@ -94,7 +106,7 @@ public class MotorControlSubsystem extends BaseSubsystem {
             motor.periodic();
         }
 
-        motorSpeed.set(motors[3].getVelocity());
-        motorPosition.set(motors[3].getPosition());
+        motorSpeed.set(activeRight.getVelocity());
+        motorPosition.set(activeRight.getPosition());
     }
 }

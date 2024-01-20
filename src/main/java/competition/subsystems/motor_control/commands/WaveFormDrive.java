@@ -12,6 +12,7 @@ import javax.inject.Inject;
 public class WaveFormDrive extends BaseCommand {
 
     DoubleProperty frequency;
+    DoubleProperty ratio;
     DoubleProperty amplitude;
     DoubleProperty offset;
     DoubleProperty maxSpeed;
@@ -29,6 +30,7 @@ public class WaveFormDrive extends BaseCommand {
         pf.setPrefix(this);
 
         frequency = pf.createPersistentProperty("frequency", 1);
+        ratio = pf.createPersistentProperty("ratio", 1);
         amplitude = pf.createPersistentProperty("amplitude", 0.1);
         offset = pf.createPersistentProperty("offset", 0);
         maxSpeed = pf.createPersistentProperty("maxSpeed", 1);
@@ -76,13 +78,16 @@ public class WaveFormDrive extends BaseCommand {
 
                 waveForm.set(position);
                 motor.setLeftPosition(position);
+                motor.setRightPosition(position);
             } else if(isVelocity.get()){
                 //closed loop; velocity
                 speed = offset.get() + (amplitude.get()
                         * Math.sin(2 * Math.PI * frequency.get() * XTimer.getFPGATimestamp()));
 
                 waveForm.set(speed);
-                motor.setLeftSpeed(speed);
+                System.out.println("Set speed running");
+                motor.setRightSpeed(speed);
+                motor.setLeftSpeed(speed*ratio.get());
             } else {
                 //closed loop;
                 speed = 0;
