@@ -92,7 +92,7 @@ public class MotorControlSubsystem extends BaseSubsystem {
     }
 
     public void setRightSpeed(double speed) {
-        System.out.println("activeright running with speed: "+speed);
+        //System.out.println("activeright running with speed: "+speed);
         activeRight.setReference(speed, CANSparkMax.ControlType.kVelocity);
 
     }
@@ -106,7 +106,11 @@ public class MotorControlSubsystem extends BaseSubsystem {
             motor.periodic();
         }
 
-        motorSpeed.set(activeRight.getVelocity());
+        motorSpeed.set(motors[0].getVelocity());
         motorPosition.set(activeRight.getPosition());
+        System.out.println("motors[0]"+motors[0].getVelocity());
+        System.out.println("activeRight "+activeRight.getVelocity());
+        System.out.println("motors[3]"+motors[3].getVelocity());
+        System.out.println("activeLeft "+activeLeft.getVelocity());
     }
 }

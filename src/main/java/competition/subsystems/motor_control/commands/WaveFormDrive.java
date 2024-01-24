@@ -49,7 +49,7 @@ public class WaveFormDrive extends BaseCommand {
     public void execute() {
         if (Math.abs(maxSpeed.get()) < 1) {return;}
 
-        System.out.println("WaveFormDrive executing.");
+        //System.out.println("WaveFormDrive executing.");
 
         /*
         if (!isClosedLoop.get()) {
