@@ -22,8 +22,10 @@ public class MotorControlSubsystem extends BaseSubsystem {
 
     XCANSparkMax[] motors;
 
-    DoubleProperty motorSpeed;
-    DoubleProperty motorPosition;
+    DoubleProperty leftMotorVelocity;
+    DoubleProperty leftMotorPosition;
+    DoubleProperty rightMotorVelocity;
+    DoubleProperty rightMotorPosition;
 
     @Inject
     public MotorControlSubsystem(XCANSparkMax.XCANSparkMaxFactory smFactory, PropertyFactory propertyFactory, ElectricalContract contract, DriveSubsystem ds) {
@@ -35,8 +37,10 @@ public class MotorControlSubsystem extends BaseSubsystem {
         XCANSparkMax motor4 = smFactory.create(contract.getMotor4(), this.getPrefix(), "m4");
         XCANSparkMax motor5 = smFactory.create(contract.getMotor5(), this.getPrefix(), "m5");
 
-        motorSpeed = propertyFactory.createEphemeralProperty("Motor4Speed", 0.0);
-        motorPosition = propertyFactory.createEphemeralProperty("Motor4Position", 0.0);
+        leftMotorPosition = propertyFactory.createEphemeralProperty("LeftMotorPosition", 0.0);
+        leftMotorVelocity = propertyFactory.createEphemeralProperty("LeftMotorVelocity", 0.0);
+        rightMotorPosition = propertyFactory.createEphemeralProperty("RightMotorPosition", 0.0);
+        rightMotorVelocity = propertyFactory.createEphemeralProperty("RightMotorVelocity", 0.0);
 
         motors = new XCANSparkMax[]{motor1, motor2, motor3, motor4, motor5};
         updateMotor(motor4, motor1);
@@ -106,11 +110,16 @@ public class MotorControlSubsystem extends BaseSubsystem {
             motor.periodic();
         }
 
-        motorSpeed.set(motors[0].getVelocity());
-        motorPosition.set(activeRight.getPosition());
-        System.out.println("motors[0]"+motors[0].getVelocity());
+        activeLeft.refreshDataFrame();
+        activeRight.refreshDataFrame();
+        leftMotorVelocity.set(activeLeft.getVelocity());
+        leftMotorPosition.set(activeLeft.getPosition());
+        rightMotorVelocity.set(activeLeft.getVelocity());
+        rightMotorPosition.set(activeRight.getPosition());
+
+        /*System.out.println("motors[0]"+motors[0].getVelocity());
         System.out.println("activeRight "+activeRight.getVelocity());
         System.out.println("motors[3]"+motors[3].getVelocity());
-        System.out.println("activeLeft "+activeLeft.getVelocity());
+        System.out.println("activeLeft "+activeLeft.getVelocity());*/
     }
 }
