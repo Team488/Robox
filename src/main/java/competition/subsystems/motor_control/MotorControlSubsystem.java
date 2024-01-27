@@ -114,7 +114,7 @@ public class MotorControlSubsystem extends BaseSubsystem {
         activeRight.refreshDataFrame();
         leftMotorVelocity.set(activeLeft.getVelocity());
         leftMotorPosition.set(activeLeft.getPosition());
-        rightMotorVelocity.set(activeLeft.getVelocity());
+        rightMotorVelocity.set(activeRight.getVelocity());
         rightMotorPosition.set(activeRight.getPosition());
 
         /*System.out.println("motors[0]"+motors[0].getVelocity());
