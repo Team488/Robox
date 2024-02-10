@@ -23,7 +23,7 @@ public class SetMotor extends BaseCommand {
 
     @Override
     public void initialize() {
-        motor.setMotor(index);
+//        motor.setMotor(index);
     }
 
     @Override
