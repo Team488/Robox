@@ -32,16 +32,11 @@ public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefre
 
     private double scalingFactorFromTicksToInches = 1.0 / 256.0;
 
-    DoubleProperty leftPowerProperty;
-    DoubleProperty rightPowerProperty;
-
     @Inject
     public DriveSubsystem(XCANSparkMax.XCANSparkMaxFactory talonFactory, PropertyFactory propertyFactory, ElectricalContract contract, PIDManagerFactory pf) {
         log.info("Creating DriveSubsystem");
 
         propertyFactory.setPrefix(this);
-        leftPowerProperty = propertyFactory.createEphemeralProperty("LeftPower", 0);
-        rightPowerProperty = propertyFactory.createEphemeralProperty("RightPower", 0);
 
         positionPid = pf.create(getPrefix() + "PositionPID");
         rotationPid = pf.create(getPrefix() + "RotationPID");
@@ -98,7 +93,6 @@ public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefre
 
     @Override
     public void refreshDataFrame() {
-
     }
 
 

@@ -31,16 +31,16 @@ public class MotorControlSubsystem extends BaseSubsystem {
     public MotorControlSubsystem(XCANSparkMax.XCANSparkMaxFactory smFactory, PropertyFactory propertyFactory, ElectricalContract contract, DriveSubsystem ds) {
         propertyFactory.setPrefix(this);
 
-        XCANSparkMax motor1 = smFactory.create(contract.getMotor1(), this.getPrefix(), "m1");
-        XCANSparkMax motor2 = smFactory.create(contract.getMotor2(), this.getPrefix(), "m2");
-        XCANSparkMax motor3 = smFactory.create(contract.getMotor3(), this.getPrefix(), "m3");
-        XCANSparkMax motor4 = smFactory.create(contract.getMotor4(), this.getPrefix(), "m4");
-        XCANSparkMax motor5 = smFactory.create(contract.getMotor5(), this.getPrefix(), "m5");
+        XCANSparkMax motor1 = smFactory.create(contract.getMotor1(), this.getPrefix(), "m1", "m1", null);
+        XCANSparkMax motor2 = smFactory.create(contract.getMotor2(), this.getPrefix(), "m2", "m2", null);
+        XCANSparkMax motor3 = smFactory.create(contract.getMotor3(), this.getPrefix(), "m3", "m3", null);
+        XCANSparkMax motor4 = smFactory.create(contract.getMotor4(), this.getPrefix(), "m4", "m4", null);
+        XCANSparkMax motor5 = smFactory.create(contract.getMotor5(), this.getPrefix(), "m5", "m5", null);
 
-        leftMotorPosition = propertyFactory.createEphemeralProperty("LeftMotorPosition", 0.0);
+        /*leftMotorPosition = propertyFactory.createEphemeralProperty("LeftMotorPosition", 0.0);
         leftMotorVelocity = propertyFactory.createEphemeralProperty("LeftMotorVelocity", 0.0);
         rightMotorPosition = propertyFactory.createEphemeralProperty("RightMotorPosition", 0.0);
-        rightMotorVelocity = propertyFactory.createEphemeralProperty("RightMotorVelocity", 0.0);
+        rightMotorVelocity = propertyFactory.createEphemeralProperty("RightMotorVelocity", 0.0);*/
 
         motors = new XCANSparkMax[]{motor1, motor2, motor3, motor4, motor5};
         updateMotor(motor4, motor1);
@@ -107,15 +107,15 @@ public class MotorControlSubsystem extends BaseSubsystem {
     @Override
     public void periodic() {
         for (XCANSparkMax motor : motors) {
-            motor.periodic();
+            motor.refreshDataFrame();
         }
 
         activeLeft.refreshDataFrame();
         activeRight.refreshDataFrame();
-        leftMotorVelocity.set(activeLeft.getVelocity());
+        /*leftMotorVelocity.set(activeLeft.getVelocity());
         leftMotorPosition.set(activeLeft.getPosition());
         rightMotorVelocity.set(activeRight.getVelocity());
-        rightMotorPosition.set(activeRight.getPosition());
+        rightMotorPosition.set(activeRight.getPosition());*/
 
         /*System.out.println("motors[0]"+motors[0].getVelocity());
         System.out.println("activeRight "+activeRight.getVelocity());
