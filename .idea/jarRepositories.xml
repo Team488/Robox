@@ -111,5 +111,15 @@
       <option name="name" value="maven4" />
       <option name="url" value="file:/$PROJECT_DIR$/SeriouslyCommonLib/lib" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="WPI1b42324f-17c6-4875-8e77-1c312bc8c786_0Release" />
+      <option name="name" value="WPI1b42324f-17c6-4875-8e77-1c312bc8c786_0Release" />
+      <option name="url" value="https://3015rangerrobotics.github.io/pathplannerlib/repo" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="XBot" />
+      <option name="name" value="XBot" />
+      <option name="url" value="https://pkgs.dev.azure.com/Team488/2ef6eee3-1df0-441a-9af8-5edc5c3cb203/_packaging/XBot/maven/v1" />
+    </remote-repository>
   </component>
 </project>

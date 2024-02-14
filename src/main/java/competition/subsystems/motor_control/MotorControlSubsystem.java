@@ -32,7 +32,6 @@ public class MotorControlSubsystem extends BaseSubsystem {
         propertyFactory.setPrefix(this);
 
         XCANSparkMax motor1 = smFactory.create(contract.getMotor1(), this.getPrefix(), "m1", "m1", null);
-        XCANSparkMax motor2 = smFactory.create(contract.getMotor2(), this.getPrefix(), "m2", "m2", null);
         XCANSparkMax motor3 = smFactory.create(contract.getMotor3(), this.getPrefix(), "m3", "m3", null);
         XCANSparkMax motor4 = smFactory.create(contract.getMotor4(), this.getPrefix(), "m4", "m4", null);
         XCANSparkMax motor5 = smFactory.create(contract.getMotor5(), this.getPrefix(), "m5", "m5", null);
@@ -42,7 +41,7 @@ public class MotorControlSubsystem extends BaseSubsystem {
         rightMotorPosition = propertyFactory.createEphemeralProperty("RightMotorPosition", 0.0);
         rightMotorVelocity = propertyFactory.createEphemeralProperty("RightMotorVelocity", 0.0);*/
 
-        motors = new XCANSparkMax[]{motor1, motor2, motor3, motor4, motor5};
+        motors = new XCANSparkMax[]{motor1, motor3, motor4, motor5};
         updateMotor(motor4, motor1);
 
 

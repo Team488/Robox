@@ -23,8 +23,6 @@ public class CompetitionContract extends ElectricalContract {
     @Override
     public DeviceInfo getMotor1() {return new DeviceInfo("m1" ,32, true);}
     @Override
-    public DeviceInfo getMotor2() {return new DeviceInfo("m2", 33, true);}
-    @Override
     public DeviceInfo getMotor3() {return new DeviceInfo("m3", 34, true);}
     @Override
     public DeviceInfo getMotor4() {return new DeviceInfo("m4", 35, true);}
