@@ -53,11 +53,11 @@ public class OperatorCommandMap {
         setMotor4.setMotor(4);
 
         // Buttons to change motors
-//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.RightBumper).onTrue(setMotor0);
-//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Y).onTrue(setMotor1);
-//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).onTrue(setMotor2);
-//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.B).onTrue(setMotor3);
-//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.A).onTrue(setMotor4);
+       operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.RightBumper).onTrue(setMotor0);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Y).onTrue(setMotor1);
+       operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).onTrue(setMotor2);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.B).onTrue(setMotor3);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.A).onTrue(setMotor4);
 
         operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).whileTrue(waveFormDrive);
 
