@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 
+import edu.wpi.first.wpilibj.SerialPort;
 import xbot.common.advantage.DataFrameRefreshable;
 import xbot.common.controls.actuators.XCANSparkMax;
 
@@ -34,10 +35,12 @@ public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefre
 
     DoubleProperty leftPowerProperty;
     DoubleProperty rightPowerProperty;
+    SerialPort a;
 
     @Inject
     public DriveSubsystem(XCANSparkMax.XCANSparkMaxFactory talonFactory, PropertyFactory propertyFactory, ElectricalContract contract, PIDManagerFactory pf) {
         log.info("Creating DriveSubsystem");
+        a = new SerialPort(9600, SerialPort.Port.kUSB, 8);
 
         propertyFactory.setPrefix(this);
         leftPowerProperty = propertyFactory.createEphemeralProperty("LeftPower", 0);
@@ -102,9 +105,12 @@ public class DriveSubsystem extends BaseDriveSubsystem implements DataFrameRefre
     }
 
 
-//    @Override
-//    public void periodic() {
-//        leftMotor.periodic();
-//        rightMotor.periodic();
-//    }
+    @Override
+    public void periodic() {
+        //leftMotor.periodic();
+        //rightMotor.periodic();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        a.writeString("1178698787877778879789978987");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
 }
