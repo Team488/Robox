@@ -21,7 +21,7 @@ public class SpinMotorWithJoysticks extends BaseCommand {
 
     @Override
     public void initialize() {
-        System.out.println("init");
+        //System.out.println("init");
         motor.driveActive(0, 0);
     }
 
@@ -31,7 +31,7 @@ public class SpinMotorWithJoysticks extends BaseCommand {
                 MathUtils.deadband(oi.gamepad.getLeftVector().y, 0.15),
                 MathUtils.deadband(oi.gamepad.getRightVector().y, 0.15)
         );
-        System.out.println("SpinMotorWithJoysticks running");
+        //System.out.println("SpinMotorWithJoysticks running");
     }
 
 }

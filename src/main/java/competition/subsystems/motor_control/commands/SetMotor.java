@@ -18,12 +18,12 @@ public class SetMotor extends BaseCommand {
 
     public void setMotor(int index) {
         this.index = index;
-        System.out.println("Set index: "+index);
+        //System.out.println("Set index: "+index);
     }
 
     @Override
     public void initialize() {
-        motor.setMotor(index);
+//        motor.setMotor(index);
     }
 
     @Override

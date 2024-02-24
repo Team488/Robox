@@ -3,6 +3,7 @@ package competition.operator_interface;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import competition.subsystems.CollectorSubsystem;
 import competition.subsystems.motor_control.commands.SetMotor;
 import competition.subsystems.motor_control.commands.ChangingLeftMotor;
 import competition.subsystems.motor_control.commands.ChangingRightMotor;
@@ -31,7 +32,8 @@ public class OperatorCommandMap {
             SetMotor setMotor1,
             SetMotor setMotor2,
             SetMotor setMotor3,
-            SetMotor setMotor4
+            SetMotor setMotor4,
+            CollectorSubsystem collector
     )
     {
         resetHeading.setHeadingToApply(90);
@@ -51,13 +53,15 @@ public class OperatorCommandMap {
         setMotor4.setMotor(4);
 
         // Buttons to change motors
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.RightBumper).onTrue(setMotor0);
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Y).onTrue(setMotor1);
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).onTrue(setMotor2);
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.B).onTrue(setMotor3);
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.A).onTrue(setMotor4);
+//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.RightBumper).onTrue(setMotor0);
+//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.Y).onTrue(setMotor1);
+//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).onTrue(setMotor2);
+//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.B).onTrue(setMotor3);
+//        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.A).onTrue(setMotor4);
 
-        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.LeftBumper).whileTrue(waveFormDrive);
+        operatorInterface.gamepad.getXboxButton(XXboxController.XboxButton.X).whileTrue(waveFormDrive);
 
+        operatorInterface.gamepad.getXboxButton((XXboxController.XboxButton.RightBumper)).whileTrue(collector.getForwardCommand());
+        operatorInterface.gamepad.getXboxButton((XXboxController.XboxButton.LeftBumper)).whileTrue(collector.getReverseCommand());
     }
 }
